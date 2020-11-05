@@ -24,14 +24,14 @@ const handler = (req, res) => {
         const onEndHandler = () => {
             const parsedBody = Buffer.concat(body).toString();
             const message = parsedBody.split('=')[1];
-            
-            fs.writeFileSync('message.txt', message);
+
+            fs.writeFile('message.txt', message, (err) => {
+                res.statusCode = 302;
+                res.setHeader('Location', '/');
+                return res.end();
+            });
         }
         req.on('end', onEndHandler);
-
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
-        return res.end();
     }
 
     res.setHeader('Content-Type', 'text/html');
