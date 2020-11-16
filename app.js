@@ -1,18 +1,17 @@
-const http = require('http');
-
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
+const PORT = 3000;
 
-app.use((req, res, next) => {
-    console.log("First middleware");
-    next();
-});
+// MIDDLEWARES
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-    console.log("final middleware");
-    res.send("<html><body><h1>Hello from express!</h1></body></html>");
-});
+// ROUTES
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
 
-const server = http.createServer(app);
-server.listen(3000);
+app.use(adminRoutes);
+app.use(shopRoutes);
+
+app.listen(PORT, () => console.log(`Running on port ${PORT}`));
