@@ -7,6 +7,7 @@ const PORT = 3000;
 
 // MIDDLEWARES
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
 
 // ROUTES
 const adminRoutes = require("./routes/admin");
